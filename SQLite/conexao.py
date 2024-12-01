@@ -25,6 +25,36 @@ def excluir_registro(conexao, cursor, id):
     cursor.execute("DELETE FROM clientes WHERE id=?;", data)
     conexao.commit()
 
+def inserir_muitos(conexao, cursor, dados):
+    cursor.executemany(f"INSERT INTO clientes (nome, email) VALUES (?,?);", dados)
+    conexao.commit()
+
+def recuperar_cliente(cursor, id):
+    cursor.execute("SELECT * FROM clientes WHERE id=?", (id,))
+    return cursor.fetchone()
+
+def listar_cliente(cursor):
+    return cursor.execute("SELECT * FROM clientes ORDER BY nome;")
+
+clientes = listar_cliente(cursor)
+for cliente in clientes:
+    print(cliente)
+
+
+# cliente = recuperar_cliente(cursor, 2) # localizar clientes
+# print(cliente)
+
+
+
+# dados = [
+#     ("Junior Negão", "Jrnegao@gmail.com"),
+#     ("Sinha moça", "mocinha@gmail.com")
+#     ("Suila", "suila@gmail.com")
+# ]
+
+# inserir_muitos(conexao, cursor, dados)
+
+
 #inserir_registro(conexao, cursor, 'Bob', 'boobsbob@boob.com')
 #atualizar_registro(conexao, cursor, 'Lennon Müler', 'lennon-muller@hotmail.com', 1)
-excluir_registro(conexao, cursor, 3)
+#excluir_registro(conexao, cursor, 3)
